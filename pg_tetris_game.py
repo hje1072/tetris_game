@@ -185,7 +185,7 @@ class Tetromino:
             for i in range(len(self.form)):
                 xpos = i % self.size
                 ypos = i // self.size
-                if (0 <= self.xpos + xpos and self.xpos + xpos <= 10) and (-1 <= self.ypos + ypos and self.ypos + ypos <= 17):
+                if 0 <= self.xpos + xpos <= 10 and -1 <= self.ypos + ypos <= 17:
                     form = self.form[ypos * self.size + xpos]
                     if form != 0:
                         FIELD[self.ypos + ypos][self.xpos + xpos] = form
@@ -204,7 +204,7 @@ def overlap_check(tetromino, turn, xpos, ypos):
     for i in range(len(tetromino.form)):
             c = i % tetromino.size
             r = i // tetromino.size
-            if (0 <= xpos + c and xpos + c < WALL_COL) and (0 <= ypos + r and ypos + r < WALL_ROW):
+            if 0 <= xpos + c < WALL_COL and 0 <= ypos + r < WALL_ROW:
                 if form[r * tetromino.size + c] != 0 and FIELD[ypos + r][xpos + c] != 0:
                     return True
     return False
