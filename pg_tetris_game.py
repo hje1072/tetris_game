@@ -255,7 +255,7 @@ def draw_background():
             if field_element != 0 and field_element != 9 and ypos != WALL_ROW - 1:
                 pg.draw.rect(GAME_SCREEN, TETROMINO_COLOR[field_element - 1], (xpos * 40 + 40, ypos * 40 + 40, 39, 39))
 
-# 다음 테트로미노 미리보기
+# 다음 테트로미노 미리보기(게임 화면 우측 상단)
 def next_tetromino_preview():
     for i in range(len(TETROMINO_NEXT.form)):
         xpos = i % TETROMINO_NEXT.size
