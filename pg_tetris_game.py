@@ -2,7 +2,7 @@ import pygame as pg
 import time
 import random
 
-# [index] - 0 ~ 3: 블록 상태 / 4: ID / 5: 크기
+# [index] - 0 ~ 3: 블록 상태 / 4: ID(색을 결정) / 5: 크기
 L_TETROMINO = (
     (0, 1, 0,
      0, 1, 0,
@@ -159,15 +159,15 @@ I_TETROMINO = (
 
 class Tetromino:
     def __init__(self):
-        self.turnCount = 0
-        self.turn = self.turnCount % 4
-        self.type = random.choice(TETROMINO_BLOCK)
-        self.form = self.type[self.turn]
-        self.id = self.type[4]
-        self.size = self.type[5]
-        self.color = TETROMINO_COLOR[self.id - 1]
-        self.xpos = random.randint(3, 9 - self.size)
-        self.ypos = 1 - self.size
+        self.turnCount = 0                              # 테트로미노 회전 횟수
+        self.turn = self.turnCount % 4                  # 테트로미노 회전 상태
+        self.type = random.choice(TETROMINO_BLOCK)      # 테트로미노 선택
+        self.form = self.type[self.turn]                # 테트로미노 형태(회전수 반영)
+        self.id = self.type[4]                          # 테르로미노 ID (색상 결정)
+        self.size = self.type[5]                        # 테트로미노 크기 (3 * 3 or 4 * 4)
+        self.color = TETROMINO_COLOR[self.id - 1]       # 테트로미노 색상
+        self.xpos = random.randint(3, 9 - self.size)    # 테트로미노 x 좌표
+        self.ypos = 1 - self.size                       # 테트로미노 y 좌표
         
     def draw(self):
         for i in range(len(self.form)):
@@ -198,15 +198,15 @@ def new_tetromino():
         TETROMINO_NOW = TETROMINO_NEXT
     TETROMINO_NEXT = Tetromino()
 
-# 이동 후 벽 또는 다른 테트로미노와 겹치는지 확인하는 함수
+# 이동 후 벽 또는 다른 테트로미노 블록과 겹치는지 확인하는 함수
 def overlap_check(tetromino, turn, xpos, ypos):
     form = tetromino.type[turn]
     for i in range(len(tetromino.form)):
-            c = i % tetromino.size
-            r = i // tetromino.size
-            if 0 <= xpos + c < WALL_COL and 0 <= ypos + r < WALL_ROW:
-                if form[r * tetromino.size + c] != 0 and FIELD[ypos + r][xpos + c] != 0:
-                    return True
+        c = i % tetromino.size
+        r = i // tetromino.size
+        if 0 <= xpos + c < WALL_COL and 0 <= ypos + r < WALL_ROW:
+            if form[r * tetromino.size + c] != 0 and FIELD[ypos + r][xpos + c] != 0:
+                return True
     return False
 
 # 테트로미노 하강 계산
@@ -236,7 +236,7 @@ def score_up():
     if compacted_row > 0:
         score += (2 ** compacted_row) * 100
 
-# 게임 보드 그리기
+# 게임 화면 그리기
 def draw_background():
     GAME_SCREEN.fill((0, 0, 0))
     # 격자 무늬 그리기
@@ -273,13 +273,14 @@ def draw_score():
     GAME_SCREEN.blit(score_txt_1, (600, 660))
     GAME_SCREEN.blit(score_txt_2, (600, 700))
 
-# 게임 오버 여부 확인
+# 게임 종료 여부 확인
 def calc_game_over():
-    global game_over_check, ENDING_SCREEN
+    global ENDING_SCREEN
+    game_over_check = 0
     for element in FIELD[0]:
         if element != 0 and element != 9: # 0: 빈 공간, 9: 벽
             game_over_check += 1
-    if game_over_check > 2:
+    if game_over_check > 0:
         ENDING_SCREEN = True
 
 # 게임 시작 화면 그리기
@@ -317,16 +318,15 @@ WIDTH = 800
 HEIGHT = 800
 TETROMINO_BLOCK = [L_TETROMINO, J_TETROMINO, T_TETROMINO, Z_TETROMINO, S_TETROMINO, O_TETROMINO, I_TETROMINO]
 TETROMINO_COLOR = [(255, 128, 0), (0, 0, 255), (128, 0, 255), (255, 0, 0), (0, 255, 0), (255, 255, 0), (0, 128, 255)]
-CELL_SIZE = 40
-WALL_ROW = 18
-WALL_COL = 12
-GRID_ROW = 20
-GRID_COL = 14
-TIME_INTERVAL = 10
+CELL_SIZE = 40      # 필드를 구성하는 셀의 크기
+WALL_ROW = 18       # 필드 행의 개수
+WALL_COL = 12       # 필드 열의 개수
+GRID_ROW = 20       # 격자 무늬 행의 개수
+GRID_COL = 14       # 격자 무늬 열의 개수
+TIME_INTERVAL = 10  # 테트로미노 하강 간격
 
-time_count = 0
+time_count = 0      # 테트로미노 하강 속도 조절. tetromino_descent() 함수 참고
 score = 0
-game_over_check = 0  # 2를 초과하면 게임 종료
 
 TETROMINO_NOW = Tetromino()
 TETROMINO_NEXT = Tetromino()
@@ -368,22 +368,27 @@ while GAME_RUNNING:
             GAME_RUNNING = False
         elif event.type == pg.KEYDOWN:
             GAME_INTRO = False
+            # q를 눌러 게임 종료
             if event.key == pg.K_q:
                 GAME_RUNNING = False
+            # 스페이스 바를 눌러 테트로미노 블록 회전
             elif event.key == pg.K_SPACE:
                 overlap = overlap_check(TETROMINO_NOW, (TETROMINO_NOW.turnCount + 1) % 4, TETROMINO_NOW.xpos, TETROMINO_NOW.ypos)
                 if overlap == False:
                     TETROMINO_NOW.turnCount += 1
                     TETROMINO_NOW.turn = TETROMINO_NOW.turnCount % 4
                     TETROMINO_NOW.form = TETROMINO_NOW.form = TETROMINO_NOW.type[TETROMINO_NOW.turn]
+            # 방향키 아래 버튼을 눌러 테트로미노 블록 하강 이동
             elif event.key == pg.K_DOWN:
                 overlap = overlap_check(TETROMINO_NOW, TETROMINO_NOW.turn, TETROMINO_NOW.xpos, TETROMINO_NOW.ypos + 1)
                 if overlap == False:
                     TETROMINO_NOW.ypos += 1
+            # 방향키 왼쪽 버튼을 눌러 테트로미노 블록 왼쪽 이동
             elif event.key == pg.K_LEFT:
                 overlap = overlap_check(TETROMINO_NOW, TETROMINO_NOW.turn, TETROMINO_NOW.xpos - 1, TETROMINO_NOW.ypos)
                 if overlap == False:
                     TETROMINO_NOW.xpos -= 1
+            # 방향키 오른쪽 버튼을 눌러 테트로미노 블록 오른쪽 이동
             elif event.key == pg.K_RIGHT:
                 overlap = overlap_check(TETROMINO_NOW, TETROMINO_NOW.turn, TETROMINO_NOW.xpos + 1, TETROMINO_NOW.ypos)
                 if overlap == False:
@@ -397,7 +402,7 @@ while GAME_RUNNING:
         if GAME_INTRO == True:
             draw_intro()
         else:
-            # 게임 종료 여부 확인 - 맨 윗 줄(FIELD[0])에 블록이 쌓이면 게임을 종료한다.
+            # 게임 종료 여부 확인
             calc_game_over()
             
             # 배경 그리기
