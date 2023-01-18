@@ -3,7 +3,7 @@
 <br><br><br>
 
 ## 코드 설명
-*PPT를 참고 바랍니다.*
+[[pygame] 테트리스 게임.pdf](https://github.com/bada1350/tetris_game/files/10448311/pygame.pdf)
 <br><br><br>
 
 ## 사용법
