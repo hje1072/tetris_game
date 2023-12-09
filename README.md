@@ -1,10 +1,7 @@
 # tetris_game
-파이썬 파이게임(pygame)을 이용한 게임제작 - 3. 테트리스 게임
+파이썬 파이게임(pygame)을 이용한 게임제작 - 3. 테트리스 게임 개조
 <br><br><br>
 
-## 코드 설명
-[[pygame] 테트리스 게임.pdf](https://github.com/bada1350/tetris_game/files/10448311/pygame.pdf)
-<br><br><br>
 
 ## 사용법
 다운로드 후 <code>pg_tetris_game.py</code> 코드 실행
