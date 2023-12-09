@@ -10,7 +10,7 @@ n-ris 파일 그대로 다운로드 후 적당한 실행 환경에서 코드 실
 
 ## 실행 화면
 - 시작 화면<br><br>
-![tetris_intro](./img/레벨1.JPG)
+![tetris_intro](./img/시작화면.JPG)
 <br>
 
 - 게임 화면<br><br>
