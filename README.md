@@ -21,6 +21,12 @@ n-ris 파일 그대로 다운로드 후 적당한 실행 환경에서 코드 실
 - 결과 화면<br><br>
 ![tetris_result](https://user-images.githubusercontent.com/121742489/211792349-338a4015-e77c-4bc1-b9b7-9a00834fae34.png)
 
+## 개조시킨 내용들
+
+- 조작감 수정<br><br>
+![level](./img/수정1.JPG)
+
+
 
 ## 단계에 따른 난이도 분화
  처음에는 쉬운 블록으로 라인맞추기를 실행
