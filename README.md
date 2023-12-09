@@ -21,4 +21,8 @@ n-ris 파일 그대로 다운로드 후 적당한 실행 환경에서 코드 실
 ![tetris_result](https://user-images.githubusercontent.com/121742489/211792349-338a4015-e77c-4bc1-b9b7-9a00834fae34.png)
 
 
-##단계에 따른 난이도 분화
+## 단계에 따른 난이도 분화
+![LEVEL 1](./img/단계1.JPG)
+![LEVEL 1](./img/단계2.JPG)
+![LEVEL 1](./img/단계3.JPG)
+![LEVEL 1](./img/단계4.JPG)
