@@ -25,13 +25,13 @@ n-ris 파일 그대로 다운로드 후 적당한 실행 환경에서 코드 실
 ## 단계에 따른 난이도 분화
 
 - 시작 화면<br><br>
-![level](./img/단계1.JPG)
+![level](./img/레벨1.JPG)
 
 - 시작 화면<br><br>
-![level](./img/단계2.JPG)
+![level](./img/레벨2.JPG)
 
 - 시작 화면<br><br>
-![level](./img/단계3.JPG)
+![level](./img/레벨3.JPG)
 
 - 시작 화면<br><br>
-![level](./img/단계4.JPG)
+![level](./img/레벨4.JPG)
